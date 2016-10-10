@@ -14,13 +14,21 @@ namespace QuestGeneration
 
 			//phrases
 			_dict.Add("fetch_reward", new List<string> {
-				"{{fetch_if}}, {{then_reward}}",
+				"{{fetch_if}}, {{reward_then}}",
+				"{{fetch_if}}, {{reward_then}} in return",
+				"{{fetch_if?}} {{reward_then}} if you do",
+				"{{reward_then}} {{fetch_if}}",
+				"I need {{noun_fetch}}, {{reward_then}} for {{pronoun_reward}}"
 			});
 			_dict.Add("fetch_if", new List<string> {
-				"If you {{fetch_noun}}",
-				"Could you {{fetch_noun}}?"
+				"if you {{fetch_noun}}",
+				"assuming you {{fetch_noun}}"
 			});
-			_dict.Add("then_reward", new List<string> {
+			_dict.Add("fetch_if?", new List<string> {
+				"could you {{fetch_noun}}?",
+				"please {{fetch_noun}},"
+			});
+			_dict.Add("reward_then", new List<string> {
 				"I will {{reward_noun}}",
 				"I promise to {{reward_noun}}"
 			});
@@ -30,7 +38,6 @@ namespace QuestGeneration
 				"manage to {{fetch}} {{noun_fetch}}"
 			});
 			_dict.Add("reward_noun", new List<string> {
-				"{{give}} you {{noun_reward}} in return",
 				"{{give}} you {{noun_reward}}",
 				"reward you with {{noun_reward}}"
 			});

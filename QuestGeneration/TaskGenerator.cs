@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Humanizer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,14 @@ namespace QuestGeneration
 		public Task MakeFetchTask()
 		{
 			var fetch = id.GetRandomItem();
-			var reward = id.GetRandomReward(fetch);
+			var fetchNumber = rand.Next(20);
 
-			string text = "{{fetch_reward}}";
+			var reward = id.GetRandomReward(fetch);
+			var rewardNumber = rand.Next(20);
+
+			string text = "{{fetch_reward}}.";
+
+			int depth = 0;
 
 			MatchCollection matches;
 			do
@@ -35,17 +41,43 @@ namespace QuestGeneration
 				{
 					var matchString = match.Groups[1].ToString();
 
-					var options = pd.Get(matchString);
+					if (matchString == "noun_fetch")
+					{
+						text = ReplaceToken(text, "noun_fetch", AttachArticle(fetch, fetchNumber));
+					}
+					else if (matchString == "noun_reward")
+					{
+						text = ReplaceToken(text, "noun_reward", AttachArticle(reward, rewardNumber));
+					}
+					else if (matchString == "pronoun_reward")
+					{
+						text = ReplaceToken(text, matchString, PronounFor(fetch, fetchNumber));
+					}
+					else if (matchString == "pronoun_reward")
+					{
+						text = ReplaceToken(text, matchString, PronounFor(reward, rewardNumber));
+					}
+					else
+					{
+						var options = pd.Get(matchString);
+						if (options.Count == 0)
+						{
+							throw new Exception("No results found for {{" + matchString + "}}");
+						}
 
-					var replace = options[rand.Next(options.Count)];
+						var replace = options[rand.Next(options.Count)];
 
-					text = ReplaceToken(text, matchString, replace);
+						text = ReplaceToken(text, matchString, replace);
+					}
 				}
 
+				depth++;
+
+				if (depth > 50)
+				{
+					throw new Exception("Text building went to deep!");
+				}
 			} while (matches.Count > 0);
-			
-			text = ReplaceWithArticle(text, "item_fetch", fetch.Name);
-			text = ReplaceWithArticle(text, "item_reward", reward.Name);
 
 			return new Task
 			{
@@ -54,13 +86,43 @@ namespace QuestGeneration
 			};
 		}
 
-		private static string ReplaceWithArticle(string text, string token, string replacement)
+		private static string PronounFor(Item item, int count)
 		{
-			string article = "a"; 
+			if (count == 1)
+			{
+				return "it"; 
+			}
+			else
+			{
+				return "them";
+			}
+		}
 
-			var itemWithArticle = string.Format("{0} {1}", article, replacement);
+		private static string AttachArticle(Item item, int count)
+		{
+			string article = item.Article;
+			var prefix = item.CountablePrefix;
+			var name = item.Name;
+			if (count > 1)
+			{
+				article = count.ToString();
+				if (!string.IsNullOrWhiteSpace(prefix))
+				{
+					prefix = prefix.Pluralize(); 
+				}
+				else
+				{
+					name = name.Pluralize();
+				}
+			}
 
-			return ReplaceToken(text, "item_reward", itemWithArticle);
+			string itemText = name;
+			if (!string.IsNullOrWhiteSpace(prefix))
+			{
+				itemText = prefix + " of " + itemText;
+			}
+
+			return string.Format("{0} {1}", article, itemText);
 		}
 
 		private static string ReplaceToken(string text, string token, string replacement)
