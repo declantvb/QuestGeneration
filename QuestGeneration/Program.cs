@@ -12,11 +12,11 @@ namespace QuestGeneration
 		{
 			var taskgen = new TaskGenerator();
 
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 14; i++)
 			{
-				var task = taskgen.MakeFetchTask();
+				var task = taskgen.CollectTask();
 
-				Console.WriteLine(task.Name);
+				//Console.WriteLine(task.Name);
 				Console.WriteLine(task.Description);
 				Console.WriteLine();
 			}

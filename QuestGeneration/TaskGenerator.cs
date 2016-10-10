@@ -20,7 +20,7 @@ namespace QuestGeneration
 			pd = new PhraseDictionary();
 		}
 
-		public Task MakeFetchTask()
+		public CollectTask CollectTask()
 		{
 			var fetch = id.GetRandomItem();
 			var fetchNumber = rand.Next(20);
@@ -79,11 +79,24 @@ namespace QuestGeneration
 				}
 			} while (matches.Count > 0);
 
-			return new Task
+			return new CollectTask
 			{
-				Name = "Retrieve a " + fetch.Name,
-				Description = text
+				Title = "Retrieve a " + fetch.Name,
+				Description = SentenceCaseIt(text),
+
+				Item = fetch,
+				Count = fetchNumber,
+				Reward = reward,
+				RewardCount = rewardNumber
 			};
+		}
+
+		private static string SentenceCaseIt(string text)
+		{
+			const string separator = ". ";
+			var parts = text.Split(new string[] { separator }, StringSplitOptions.None);
+			var sentenceCased = parts.Select(x => x.Transform(To.SentenceCase));
+			return string.Join(separator, sentenceCased);
 		}
 
 		private static string PronounFor(Item item, int count)

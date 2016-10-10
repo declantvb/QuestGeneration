@@ -16,13 +16,13 @@ namespace QuestGeneration
 			_database = new Dictionary<string, Item>();
 			_random = new Random();
 
-			AddItem(new Item("widget",		"a",	null,			"Widget",			ItemType.Standard));
-			AddItem(new Item("ore_chunk",	"a",	"Chunk",	"Ore",				ItemType.Standard));
-			AddItem(new Item("servo",		"a",	null,			"Servo",			ItemType.Standard));
-			AddItem(new Item("energy_core",	"an",	null,			"Energy Core",		ItemType.Standard));
+			AddItem(new Item("widget",		"a",	null,		"Widget",			ItemType.Standard));
+			AddItem(new Item("ore_chunk",	"a",	"chunk",	"Ore",				ItemType.Standard));
+			AddItem(new Item("servo",		"a",	null,		"Servo",			ItemType.Standard));
+			AddItem(new Item("energy_core",	"an",	null,		"Energy Core",		ItemType.Standard));
 
-			AddItem(new Item("gold_bar",	"a",	null,			"Gold bar",			ItemType.Currency));
-			AddItem(new Item("coin",		"a",	null,			"Coin",				ItemType.Currency));
+			AddItem(new Item("gold_bar",	"a",	null,		"Gold bar",			ItemType.Currency));
+			AddItem(new Item("coin",		"a",	null,		"Coin",				ItemType.Currency));
 		}
 
 		/// <summary>

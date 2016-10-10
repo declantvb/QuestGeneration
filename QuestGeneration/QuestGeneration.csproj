@@ -51,7 +51,8 @@
     <Compile Include="ItemDatabase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Task.cs" />
+    <Compile Include="Tasks\CollectTask.cs" />
+    <Compile Include="Tasks\Task.cs" />
     <Compile Include="TaskGenerator.cs" />
     <Compile Include="VerbDictionary.cs" />
   </ItemGroup>
