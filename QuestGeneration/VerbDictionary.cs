@@ -13,33 +13,42 @@ namespace QuestGeneration
 			_dict = new Dictionary<string, List<string>>();
 
 			//phrases
+
+			_dict.Add("char_intro", new List<string> {
+				"hey, I'm {{$giver_name}}, you're {{$taker_name}} right? maybe you can help me"
+			});
+
+			_dict.Add("explain_motivation", new List<string> {
+				"i need {{$motivereason_resolution}} {{$motivereason_object}}, it {{$motivereason_descriptor}} because of the {{$motive_descriptor}} {{$motive_time}}"
+			});
+
 			_dict.Add("fetch_reward", new List<string> {
 				"{{fetch_if}}, {{reward_then}}",
 				"{{fetch_if}}, {{reward_then}} in return",
-				"{{fetch_if?}} {{reward_then}} if you do",
+				"{{fetch_if?}} {{reward_then}} if {{#second_subject}} do",
 				"{{reward_then}} {{fetch_if}}",
-				"I need {{noun_fetch}}, {{reward_then}} for {{pronoun_reward}}"
+				"{{#first_subject}} need {{noun_fetch}}, {{reward_then}} for {{pronoun_reward}}"
 			});
 			_dict.Add("fetch_if", new List<string> {
-				"if you {{fetch_noun}}",
-				"assuming you {{fetch_noun}}"
+				"if {{#second_subject}} {{fetch_noun}}",
+				"assuming {{#second_subject}} {{fetch_noun}}"
 			});
 			_dict.Add("fetch_if?", new List<string> {
-				"could you {{fetch_noun}}?",
+				"could {{#second_subject}} {{fetch_noun}}?",
 				"please {{fetch_noun}},"
 			});
 			_dict.Add("reward_then", new List<string> {
-				"I will {{reward_noun}}",
-				"I promise to {{reward_noun}}"
+				"{{#first_subject}} will {{reward_noun}}",
+				"{{#first_subject}} promise to {{reward_noun}}"
 			});
 			_dict.Add("fetch_noun", new List<string> {
-				"{{fetch}} me {{noun_fetch}}",
-				"{{fetch}} {{noun_fetch}} for me",
-				"manage to {{fetch}} {{noun_fetch}}"
+				"{{fetch}} {{#first_object}} {{noun_fetch}}",
+				"{{fetch}} {{noun_fetch}} for {{#first_object}}",
+				"{{fetch}} {{noun_fetch}}"
 			});
 			_dict.Add("reward_noun", new List<string> {
-				"{{give}} you {{noun_reward}}",
-				"reward you with {{noun_reward}}"
+				"{{give}} {{#second_subject}} {{noun_reward}}",
+				"reward {{#second_subject}} with {{noun_reward}}"
 			});
 
 			//keywords

@@ -47,13 +47,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Character.cs" />
+    <Compile Include="CharacterGenerator.cs" />
+    <Compile Include="Gender.cs" />
+    <Compile Include="PronounSet.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="ItemDatabase.cs" />
+    <Compile Include="Motivation.cs" />
+    <Compile Include="MotivationGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tasks\CollectTask.cs" />
     <Compile Include="Tasks\Task.cs" />
     <Compile Include="TaskGenerator.cs" />
+    <Compile Include="Tense.cs" />
     <Compile Include="VerbDictionary.cs" />
   </ItemGroup>
   <ItemGroup>

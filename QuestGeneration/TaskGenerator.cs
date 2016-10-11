@@ -20,7 +20,7 @@ namespace QuestGeneration
 			pd = new PhraseDictionary();
 		}
 
-		public CollectTask CollectTask()
+		public CollectTask CollectTask(Character giver, Character taker, Motivation motivation)
 		{
 			var fetch = id.GetRandomItem();
 			var fetchNumber = rand.Next(20);
@@ -28,7 +28,7 @@ namespace QuestGeneration
 			var reward = id.GetRandomReward(fetch);
 			var rewardNumber = rand.Next(20);
 
-			string text = "{{fetch_reward}}.";
+			string text = "{{char_intro}}. {{explain_motivation}}.\n{{fetch_reward}}.";
 
 			int depth = 0;
 
@@ -49,13 +49,63 @@ namespace QuestGeneration
 					{
 						text = ReplaceToken(text, "noun_reward", AttachArticle(reward, rewardNumber));
 					}
-					else if (matchString == "pronoun_reward")
+					else if (matchString == "pronoun_fetch")
 					{
 						text = ReplaceToken(text, matchString, PronounFor(fetch, fetchNumber));
 					}
 					else if (matchString == "pronoun_reward")
 					{
 						text = ReplaceToken(text, matchString, PronounFor(reward, rewardNumber));
+					}
+					else if (matchString.StartsWith("#"))
+					{
+						// pronouns
+						var cleaned = matchString.Substring(1);
+						var split = cleaned.Split('_');
+						if (split.Length != 2)
+						{
+							throw new Exception("invalid pronoun descriptor");
+						}
+
+						//TODO check gender of subject
+						var gender = PronounSet.FromString(split[0]);
+						var pronoun = gender.GetPronoun(split[1]);
+
+						text = ReplaceToken(text, matchString, pronoun);
+					}
+					else if (matchString.StartsWith("$"))
+					{
+						// subject/object data
+						var cleaned = matchString.Substring(1);
+						var split = cleaned.Split('_');
+						if (split.Length != 2)
+						{
+							throw new Exception("invalid pronoun descriptor");
+						}
+
+						string value;
+						if (split[0] == "giver")
+						{
+							value = giver.GetText(split[1]);
+						}
+						else if (split[0] == "taker")
+						{
+							value = taker.GetText(split[1]);
+						}
+						else if (split[0] == "motive")
+						{
+							value = motivation.GetText(split[1]);
+						}
+						else if (split[0] == "motivereason")
+						{
+							value = motivation.Reason.GetText(split[1]);
+						}
+						else
+						{
+							throw new Exception("unknown subject");
+						}
+
+						text = ReplaceToken(text, matchString, value);
 					}
 					else
 					{
@@ -93,10 +143,10 @@ namespace QuestGeneration
 
 		private static string SentenceCaseIt(string text)
 		{
-			const string separator = ". ";
-			var parts = text.Split(new string[] { separator }, StringSplitOptions.None);
+			var separators = new string[] { ". ", ".\n" };
+			var parts = text.Split(separators, StringSplitOptions.None);
 			var sentenceCased = parts.Select(x => x.Transform(To.SentenceCase));
-			return string.Join(separator, sentenceCased);
+			return string.Join(separators[0], sentenceCased);
 		}
 
 		private static string PronounFor(Item item, int count)
