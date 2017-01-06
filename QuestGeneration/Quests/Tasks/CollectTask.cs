@@ -7,5 +7,10 @@
 
 		public Item Reward { get; set; }
 		public int RewardCount { get; set; }
+
+		public override string ToString()
+		{
+			return $"Collect: {Count} {Item} for {RewardCount} {Reward}";
+		}
 	}
 }

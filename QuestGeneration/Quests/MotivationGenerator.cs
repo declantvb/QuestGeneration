@@ -12,15 +12,14 @@ namespace QuestGeneration
 		{
 			return new Motivation
 			{
-				Descriptor = "battle",
-				Time = "recently",
-				Location = "nearby",
-				Tense = Tense.Past,
+				SubjectNoun = "mech",
+				ProblemAdjective = "broken",
+				ResolutionVerb = "repair",
 				Reason = new MotivationReason
 				{
-					Object = "my mech",
-					Descriptor = "is broken",
-					Resolution = "to repair"
+					Noun = "battle",
+					Time = "recent",
+					Location = "nearby",
 				}
 			};
 		}

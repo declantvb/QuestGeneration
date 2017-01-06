@@ -47,26 +47,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Character.cs" />
-    <Compile Include="CharacterGenerator.cs" />
-    <Compile Include="Gender.cs" />
-    <Compile Include="PronounSet.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="ItemDatabase.cs" />
-    <Compile Include="Motivation.cs" />
-    <Compile Include="MotivationGenerator.cs" />
+    <Compile Include="Quests\GOAP\Ordering.cs" />
+    <Compile Include="Quests\GOAP\PoclPlanner.cs" />
+    <Compile Include="Quests\GOAP\PoclAction.cs" />
+    <Compile Include="Quests\GOAP\GoapPlanner.cs" />
+    <Compile Include="Quests\Models\Action.cs" />
+    <Compile Include="Quests\Models\Actions\GotoAction.cs" />
+    <Compile Include="Quests\Models\Actions\GoapKeys.cs" />
+    <Compile Include="Quests\GOAP\Fact.cs" />
+    <Compile Include="Quests\Models\Location.cs" />
+    <Compile Include="Quests\Models\Quest.cs" />
+    <Compile Include="Quests\Models\QuestNodes\AtomicNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\NonAtomicNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\NonAtomicNodes\BaseQuestNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\NonAtomicNodes\Motivators\ComfortNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\AtomicNodes\KillNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\AtomicNodes\ReportNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\NonAtomicNodes\Simple\GetNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\NonAtomicNodes\Simple\GiveNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\NonAtomicNodes\Simple\GotoNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\NonAtomicNodes\Motivators\KnowledgeNode.cs" />
+    <Compile Include="Quests\Models\QuestNodes\QuestNode.cs" />
+    <Compile Include="Quests\QuestGenerator.cs" />
+    <Compile Include="Quests\Tasks\DeliverTask.cs" />
+    <Compile Include="Quests\LocationDatabase.cs" />
+    <Compile Include="Quests\VehicleDatabase.cs" />
+    <Compile Include="Quests\Models\Character.cs" />
+    <Compile Include="Quests\CharacterGenerator.cs" />
+    <Compile Include="Quests\Models\Gender.cs" />
+    <Compile Include="Quests\Tasks\KillTask.cs" />
+    <Compile Include="Quests\Models\Vehicle.cs" />
+    <Compile Include="Quests\Text\PronounSet.cs" />
+    <Compile Include="Quests\Models\Item.cs" />
+    <Compile Include="Quests\ItemDatabase.cs" />
+    <Compile Include="Quests\Models\Motivation.cs" />
+    <Compile Include="Quests\MotivationGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tasks\CollectTask.cs" />
-    <Compile Include="Tasks\Task.cs" />
-    <Compile Include="TaskGenerator.cs" />
-    <Compile Include="Tense.cs" />
-    <Compile Include="VerbDictionary.cs" />
+    <Compile Include="Quests\Tasks\CollectTask.cs" />
+    <Compile Include="Quests\Tasks\Task.cs" />
+    <Compile Include="Quests\TaskGenerator.cs" />
+    <Compile Include="Quests\Text\Tense.cs" />
+    <Compile Include="Quests\Text\PhraseDictionary.cs" />
+    <Compile Include="Quests\Text\TextGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
