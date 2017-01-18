@@ -16,8 +16,8 @@
 //	 */
 
 //	public Queue<PoclAction> plan(HashSet<PoclAction> availableActions,
-//								  Dictionary<Fact, bool> worldState,
-//								  Dictionary<Fact, bool> goal)
+//								  List<Fact> worldState,
+//								  List<Fact> goal)
 //	{
 //		// build up the tree and record the leaf nodes that provide a solution to the goal.
 //		List<Node> leaves = new List<Node>();
@@ -76,7 +76,7 @@
 //	 * sequence.
 //	 */
 
-//	private bool buildGraph(Node parent, List<Node> leaves, HashSet<PoclAction> usableActions, Dictionary<Fact, bool> goal)
+//	private bool buildGraph(Node parent, List<Node> leaves, HashSet<PoclAction> usableActions, List<Fact> goal)
 //	{
 //		bool foundOne = false;
 
@@ -132,13 +132,13 @@
 //	 * then this returns false.
 //	 */
 
-//	private bool inState(Dictionary<Fact, bool> test, Dictionary<Fact, bool> state)
+//	private bool inState(List<Fact> test, List<Fact> state)
 //	{
 //		bool allMatch = true;
-//		foreach (KeyValuePair<Fact, bool> t in test)
+//		foreach (Fact t in test)
 //		{
 //			bool match = false;
-//			foreach (KeyValuePair<Fact, bool> s in state)
+//			foreach (Fact s in state)
 //			{
 //				if (s.Equals(t))
 //				{
@@ -152,13 +152,13 @@
 //		return allMatch;
 //	}
 
-//	private bool inState(Dictionary<string, bool> test, Dictionary<Fact, bool> state)
+//	private bool inState(Dictionary<string, bool> test, List<Fact> state)
 //	{
 //		bool allMatch = true;
 //		foreach (KeyValuePair<string, bool> t in test)
 //		{
 //			bool match = false;
-//			foreach (KeyValuePair<Fact, bool> s in state)
+//			foreach (Fact s in state)
 //			{
 //				if (s.Key.Type == t.Key)
 //				{
@@ -176,7 +176,7 @@
 //	 * Apply the stateChange to the currentState
 //	 */
 
-//	private Dictionary<Fact, bool> addState(Dictionary<Fact, bool> currentState, Dictionary<Fact, bool> stateChange)
+//	private List<Fact> addState(List<Fact> currentState, List<Fact> stateChange)
 //	{
 //		var state = currentState.ToDictionary(x => x.Key, x => x.Value);
 
@@ -185,7 +185,7 @@
 //			// if the key exists in the current state, update the Value
 //			bool exists = false;
 
-//			foreach (KeyValuePair<Fact, bool> s in state)
+//			foreach (Fact s in state)
 //			{
 //				if (s.Equals(change))
 //				{
@@ -202,16 +202,16 @@
 //		return state;
 //	}
 
-//	private Dictionary<Fact, bool> subtractState(Dictionary<Fact, bool> currentState, Dictionary<Fact, bool> stateChange)
+//	private List<Fact> subtractState(List<Fact> currentState, List<Fact> stateChange)
 //	{
 //		var state = currentState.ToDictionary(x => x.Key, x => x.Value);
 
-//		foreach (KeyValuePair<Fact, bool> change in stateChange)
+//		foreach (Fact change in stateChange)
 //		{
 //			// if the key exists in the current state, update the Value
 //			bool exists = false;
 
-//			foreach (KeyValuePair<Fact, bool> s in state)
+//			foreach (Fact s in state)
 //			{
 //				if (s.Equals(change))
 //				{
@@ -236,10 +236,10 @@
 //	{
 //		public Node parent;
 //		public float runningCost;
-//		public Dictionary<Fact, bool> state;
+//		public List<Fact> state;
 //		public PoclAction action;
 
-//		public Node(Node parent, float runningCost, Dictionary<Fact, bool> state, PoclAction action)
+//		public Node(Node parent, float runningCost, List<Fact> state, PoclAction action)
 //		{
 //			this.parent = parent;
 //			this.runningCost = runningCost;

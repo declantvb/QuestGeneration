@@ -47,14 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Quests\GOAP\Ordering.cs" />
+    <Compile Include="Quests\GOAP\Facts\ItemAtLocationFact.cs" />
+    <Compile Include="Quests\GOAP\Facts\HasItemFact.cs" />
+    <Compile Include="Quests\GOAP\Facts\CharacterAtLocationFact.cs" />
     <Compile Include="Quests\GOAP\PoclPlanner.cs" />
     <Compile Include="Quests\GOAP\PoclAction.cs" />
     <Compile Include="Quests\GOAP\GoapPlanner.cs" />
     <Compile Include="Quests\Models\Action.cs" />
+    <Compile Include="Quests\Models\Actions\GetItemAction.cs" />
     <Compile Include="Quests\Models\Actions\GotoAction.cs" />
-    <Compile Include="Quests\Models\Actions\GoapKeys.cs" />
-    <Compile Include="Quests\GOAP\Fact.cs" />
+    <Compile Include="Quests\GOAP\Facts\Fact.cs" />
     <Compile Include="Quests\Models\Location.cs" />
     <Compile Include="Quests\Models\Quest.cs" />
     <Compile Include="Quests\Models\QuestNodes\AtomicNode.cs" />

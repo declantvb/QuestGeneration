@@ -21,6 +21,7 @@ namespace QuestGeneration
 			actions = new List<PoclAction>
 			{
 				new GotoAction(),
+				new GetItemAction()
 			};
 		}
 
@@ -45,30 +46,34 @@ namespace QuestGeneration
 			return q;
 		}
 
-		private Dictionary<Fact, bool> GetStartState(Quest q)
+		private List<Fact> GetStartState(Quest q)
 		{
-			return new Dictionary<Fact, bool>
+			return new List<Fact>
 			{
-				{ new Fact(GoapKeys.AtLocation, q.Taker, ld.GetRandom()), true }
+				{ new CharacterAtLocationFact(q.Taker, ld.Get("Great Plains"), true) },
+				{ new ItemAtLocationFact(id.Get("widget"), ld.Get("The Slash"), true) }
 			};
 		}
 
-		private Dictionary<Fact, bool> RealiseGoalState(Quest q)
+		private List<Fact> RealiseGoalState(Quest q)
 		{
-			var ret = new Dictionary<Fact, bool>();
-			foreach (var kvp in q.Strategy.GoalState)
+			var ret = new List<Fact>();
+			foreach (var subGoal in q.Strategy.GoalState)
 			{
-				Fact fact;
-				switch (kvp.Key.Type)
+				var atLocationFact = subGoal as CharacterAtLocationFact;
+				var hasItemFact = subGoal as HasItemFact;
+				if (atLocationFact != null)
 				{
-					case GoapKeys.AtLocation:
-						fact = new Fact(kvp.Key.Type, q.Taker, ld.GetRandomTarget());
-						break;
-
-					default:
-						throw new Exception("bad fact key");
+					ret.Add(new CharacterAtLocationFact(q.Taker, ld.Get("Great Plains"), subGoal.Value));
 				}
-				ret.Add(fact, kvp.Value);
+				else if (hasItemFact != null)
+				{
+					ret.Add(new HasItemFact(q.Taker, id.Get("widget"), subGoal.Value));
+				}
+				else
+				{
+					throw new Exception();
+				}
 			}
 			return ret;
 		}

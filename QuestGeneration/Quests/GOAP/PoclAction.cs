@@ -3,18 +3,19 @@ using System.Collections.Generic;
 
 public abstract class PoclAction
 {
-	public Dictionary<Fact, bool> Preconditions;
-	public Dictionary<Fact, bool> Effects;
+	public List<Fact> Preconditions;
+	public List<Fact> Effects;
 	
 	public float Cost = 1f;
 
 	public PoclAction()
 	{
-		Preconditions = new Dictionary<Fact, bool>();
-		Effects = new Dictionary<Fact, bool>();
+		Preconditions = new List<Fact>();
+		Effects = new List<Fact>();
 	}
 
 	public abstract PoclAction Clone();
 
-	public abstract void FillGiven(KeyValuePair<Fact,bool> kvp);
+	public abstract bool FillGivenEffect(Fact fact);
+	public abstract bool FillGivenPrecondition(Fact fact);
 }

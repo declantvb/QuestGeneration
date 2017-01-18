@@ -20,12 +20,13 @@ namespace QuestGeneration
 
 		private void Init()
 		{
-			Preconditions = new Dictionary<Fact, bool>();
-			Effects = new Dictionary<Fact, bool>();
+			Preconditions = new List<Fact>();
+			Effects = new List<Fact>();
 
-			Preconditions.Add(new Fact(GoapKeys.AtLocation, char1, loc1), true);
-			//Effects.Add(new Fact(GoapKeys.AtLocation, char1, loc1), false);
-			Effects.Add(new Fact(GoapKeys.AtLocation, char1, loc2), true);
+			Preconditions.Add(new CharacterAtLocationFact(char1, loc1, true));
+
+			Effects.Add(new CharacterAtLocationFact(char1, loc1, false));
+			Effects.Add(new CharacterAtLocationFact(char1, loc2, true));
 		}
 
 		public override PoclAction Clone()
@@ -33,29 +34,59 @@ namespace QuestGeneration
 			return new GotoAction();
 		}
 
-		public override void FillGiven(KeyValuePair<Fact, bool> kvp)
+		public override bool FillGivenEffect(Fact fact)
 		{
-			var fact = kvp.Key;
-
-			if (fact.Type == GoapKeys.AtLocation)
+			var atLoc = fact as CharacterAtLocationFact;
+			if (atLoc != null)
 			{
-				if (kvp.Value)
+				if (fact.Value)
 				{
-					char1 = fact.Subject as Character;
-					loc2 = fact.Object as Location;
-					Init();
+					if ((char1 == Character.Unknown || char1 == atLoc.Subject) &&
+						(loc2 == Location.Unknown || loc2 == atLoc.Object))
+					{
+						char1 = atLoc.Subject;
+						loc2 = atLoc.Object;
+						Init();
+						return true;
+					}
+					return false;
 				}
 				else
 				{
-					char1 = fact.Subject as Character;
-					loc1 = fact.Object as Location;
-					Init();
+					if ((char1 == Character.Unknown || char1 == atLoc.Subject) &&
+						(loc1 == Location.Unknown || loc1 == atLoc.Object))
+					{
+						char1 = atLoc.Subject;
+						loc1 = atLoc.Object;
+						Init();
+						return true;
+					}
+					return false;
 				}
 			}
-			else
+
+			Console.WriteLine("err");
+			return false;
+		}
+
+		public override bool FillGivenPrecondition(Fact fact)
+		{
+			var atLoc = fact as CharacterAtLocationFact;
+			if (atLoc != null && fact.Value)
 			{
-				Console.WriteLine("err");
+				if ((char1 == Character.Unknown || char1 == atLoc.Subject) &&
+					(loc1 == Location.Unknown || loc1 == atLoc.Object))
+				{
+					char1 = atLoc.Subject;
+					loc1 = atLoc.Object;
+					Init();
+					return true;
+				}
+				return false;
 			}
+
+			Console.WriteLine("err");
+			return false;
 		}
 	}
 }

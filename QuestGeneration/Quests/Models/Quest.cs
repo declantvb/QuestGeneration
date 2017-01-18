@@ -12,8 +12,8 @@ namespace QuestGeneration
 		public Character Giver;
 		public Character Taker;
 
-		public Dictionary<Fact, bool> WorldState;
-		public Dictionary<Fact, bool> GoalState;
+		public List<Fact> WorldState;
+		public List<Fact> GoalState;
 
 		public List<Item> Items;
 		public List<Character> Characters;
@@ -45,9 +45,11 @@ namespace QuestGeneration
 				Name = "Test",
 				Strategies = new QuestStrategy[]
 				{
-					new QuestStrategy("Goto place", new Dictionary<Fact, bool>
+					new QuestStrategy("Goto place", new List<Fact>
 					{
-						{ new Fact(GoapKeys.AtLocation), true }
+						//{ new CharacterAtLocationFact(Character.Unknown, Location.Unknown), true },
+
+						{ new HasItemFact(Character.Unknown, Item.Unknown, true) }
 					}),
 					//new QuestStrategy("Interview NPC", new Dictionary<string,bool>
 					//{
@@ -72,9 +74,9 @@ namespace QuestGeneration
 	public class QuestStrategy
 	{
 		public string Name;
-		public Dictionary<Fact, bool> GoalState;
+		public List<Fact> GoalState;
 
-		public QuestStrategy(string name, Dictionary<Fact, bool> goal)
+		public QuestStrategy(string name, List<Fact> goal)
 		{
 			Name = name;
 			GoalState = goal;
